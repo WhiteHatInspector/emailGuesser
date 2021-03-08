@@ -4,9 +4,9 @@ emailGuesser is an open source project which helps users "guess" their target's 
 It is highly advisable to run the script using a VPN to enhance your privacy protection! It will also ensure your IP will not get banned due to continuous requests to the sites used.
 
 Installation
-To install this project run
-$ git clone https://github.com/WhiteHatInspector/emailGuesser
-cd emailGuesser
+To install this project run: 
+$ git clone https://github.com/WhiteHatInspector/emailGuesser --> 
+cd emailGuesser --> 
 python3 emailGuesser.py
 
 Usage
