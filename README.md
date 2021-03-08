@@ -1,5 +1,5 @@
 # emailGuesser
-You 've heard of brute-force attacks to find a password. How about brute-force guessing a target's email address?
+You 've probably heard of brute-force attacks to find a password. How about brute-force "guessing" a target's email address?
 
 Introducing emailGuesser!
 emailGuesser is an Open Source Intelligence (OSINT) project which helps users "guess" their target's email address based on multiple inputs and preferences.
