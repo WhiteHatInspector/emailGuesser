@@ -193,11 +193,11 @@ while True == True:
 					result_new = soup_new.find_all(class_="profile-box__table-value")
 					for r in result_new:
 						mailcheck = mailcheck + "\n" + r.text.strip()
-					final_emails.insert(0, mailcheck + "\nMore info:" + url_new + "\n") # Add it to the top of the list in order to be shown first as Skype account
+					final_emails.insert(0, mailcheck + "\nMore info: " + url_new + "\n") # Add it to the top of the list in order to be shown first as Skype account
 				elif n.text.strip() != "0 results for " + mailcheck:
 					final_emails_text.insert(0, mailcheck)
 					print(blue + mailcheck + reset + " was found in multiple Skype accounts")
-					final_emails.insert(0, blue + mailcheck + reset + " Multiple skype accounts found\n") # Add it to the top of the list in order to be shown first as Skype account
+					final_emails.insert(0, blue + mailcheck + reset + " Multiple skype accounts found: " + url + "\n") # Add it to the top of the list in order to be shown first as Skype account
 				else:
 					# print("https://haveibeenpwned.com/account/" + mailcheck)
 					url = "https://haveibeenpwned.com/account/" + mailcheck
