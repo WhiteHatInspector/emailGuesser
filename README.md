@@ -10,7 +10,7 @@ Use this tool responsibly and ethically! You will be reliable for any abuse or h
 
 It is highly advisable to run the script using a VPN to enhance your privacy protection! It will also ensure your IP will not get banned due to continuous requests to the sites used.
 
-### Installation
+## Installation
 To install this project run: 
 
 `$ git clone https://github.com/WhiteHatInspector/emailGuesser`
@@ -19,7 +19,7 @@ To install this project run:
 
 `python3 emailGuesser.py`
 
-### Usage
+## Usage
 The script will search for potential e-mail addresses of a target according to inputs given by the user. It will try "guessing" potential e-mail addresses of the target by using the most common formats used in e-mail addresses (e.g. jsmith@gmail.com).
 
 The script asks for the following user inputs:
