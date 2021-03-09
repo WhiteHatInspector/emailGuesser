@@ -28,7 +28,7 @@ $ python3 emailGuesser.py
 The script will search for potential e-mail addresses of a target according to inputs given by the user. It will try "guessing" potential e-mail addresses of the target by using the most common formats used in e-mail addresses (e.g. jsmith@gmail.com).
 
 The script asks for the following user inputs:
-
+```
 Name: Insert the first name of your target (mandatory)
 
 Surname: Insert the last name of your target (mandatory)
@@ -44,7 +44,7 @@ Add extra e-mail formats: Use static or dynamic formats for the username of the 
 - last!! -for the target's last name-.
 
 Add domains: Input all domains that you wish to contact a search to, separated by a single comma (e.g. yahoo.com,gmail.com)
-
+```
 The script will check the structure of the e-mail addresses and will query the valid ones to:
 1. Skype (using the skypli.com site)
 2. Breached databases (using the haveibeenpwned.com site)
