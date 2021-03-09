@@ -99,5 +99,5 @@ Right now I am working on the following TODO list:
 For any feedback or questions please contact me on https://twitter.com/whinspector or theinspector32@protonmail.com
 
 ## License
-MIT © 2021 emailGuesser
-created by White Hat Inspector
+MIT © 2021 emailGuesser <br/>
+Created by White Hat Inspector
