@@ -54,9 +54,7 @@ The script will check the structure of the e-mail addresses that were automatica
 1. Skype (using the skypli.com site)
 2. Breached databases (using the haveibeenpwned.com site)
 
-Below is a list of preconfigured e-mail formats that the site will search, even if not specified otherwise by user:
-
-
+You can find a list of preconfigured e-mail formats that the site will search, even if not specified otherwise by user, here.
 
 All e-mail addresses that are found in any of these sites, will return to the user at the end of the script, containing further info.
 
@@ -74,7 +72,7 @@ A: haveIbeenPwned is a trustworthy site containing most known breach databases. 
 free for anyone to use without having to pay for commercial products or APIs
 
 **Q: Why are your queries slow for each e-mail address produced?** <br/>
-A: In order to avoid getting an IP flag for a potential DDoS attack, I am using a random waiting time between 5-8 seconds before each query in these sites.
+A: In order to avoid getting an IP flag for a potential DDoS attack, I am using a random waiting time between 5-8 seconds before each request in these sites.
 Unfortunately, this makes the processing time higher than just a second for each query. I am working on it, to make it run faster. Will update if I figure a way to do so.
 
 **Q: Why do you generate a .txt file with results at the end?** <br/>
