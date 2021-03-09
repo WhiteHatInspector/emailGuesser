@@ -1,3 +1,4 @@
+# imports
 import re
 import requests
 from bs4 import BeautifulSoup
@@ -8,32 +9,37 @@ import random
 red = "\033[31m"
 green = "\033[32m"
 blue = "\033[34m"
+yellow = "\033[33m"
 reset = "\033[39m"
 
+# Initial screen
 print("Welcome to " + green + "emailGuesser" + reset + "!\nDeveloped by " + blue + "White Hat Inspector (@WHInspector)" + reset + ".\nFor feedback and/or questions send me a private message on " + blue + "https://twitter.com/whinspector" + reset)
 
 # User inputs
 while True == True:
-	input1 = input('Please enter name: ')
-	input2 = input("Please enter surname: ")
-	input3 = input("Please enter birth year (or no): ")
-	input4 = input("Please enter username (or no): ")
+	name_input = input(yellow + 'Please enter name: ' + reset)
+	last_name_input = input(yellow + "Please enter surname: " + reset)
+	birth_input = input(yellow + "Please enter birth year (or no): " + reset)
+	username_input = input(yellow + "Please enter username (or no): " + reset)
 
-	if len(input3) != 4:
-		input3 = "no"
+	# Check if birth year is 4 digits long
+	if len(birth_input) != 4:
+		birth_input = "no"
 
-	input5 = input("Would you like to add more e-mail formats apart from the preconfigured ones? (y/n) ")
-	while input5 != "y" and input5 != "n":
+	# Ask user if he wants to add more e-mail formats than the ones already preconfigured
+	extra_formats_input = input("Would you like to add more e-mail formats apart from the preconfigured ones? (y/n) ")
+	while extra_formats_input != "y" and extra_formats_input != "n":
 		print(red + "Please select a valid input." + reset)
-		input5 = input("Would you like to add more combinations than the preconfigured ones? (y/n) ")
+		extra_formats_input = input("Would you like to add more combinations than the preconfigured ones? (y/n) ")
 
-	input6 = []
-	if input5 == "y":
-		input6 = input("Provide all extra formats you wish to examine, separated by commas: ").split(",")
+	extra_formats = []
+	if extra_formats_input == "y":
+		extra_formats = input("Provide all extra formats you wish to examine, separated by commas: ").split(",")
 
+	# User input about all domains to be searched
 	domain = input("Please enter domains separated by a single comma: ").split(",")
 
-	# Lists with which we will work
+	# Lists with which we will work during the script
 	emails = []
 	emails_for_verification = []
 	final_emails = []
@@ -43,104 +49,107 @@ while True == True:
 	for dom in domain:
 		structure = ["f!!last!!", "f!!.last!!", "f!!_last!!", "last!!f!!", "last!!.f!!", "last!!_f!!", "l!!first!!", "l!!.first!!", "l!!_first!!", "first!!l!!", "first!!.l!!", "first!!_l!!", "last!!first!!", "last!!.first!!", "last!!_first!!", "first!!last!!", "first!!.last!!", "first!!_last!!", "first!!last!!1", "first!!last!!.1", "f!!last!!1", "f!!last!!.1", "first!!.last!!1", "first!!.last!!.1"]
 
-		if input5 == "y":
-			for inputs in input6:
+		# Add extra formats if specified by user
+		if extra_formats_input == "y":
+			for inputs in extra_formats:
 				structure.append(inputs)
 
-		if input3 != "no":
-			structure.append("last!!first!!" + input3)
-			structure.append("first!!last!!" + input3)
-			structure.append("f!!last!!" + input3)
-			structure.append("f!!.last!!" + input3)
-			structure.append("f!!_last!!" + input3)
-			structure.append("first!!.l!!" + input3)
-			structure.append("first!!_l!!" + input3)
-			structure.append("last!!.first!!" + input3)
-			structure.append("first!!.last!!" + input3)
-			structure.append("last!!_first!!" + input3)
-			structure.append("first!!_last!!" + input3)
-			structure.append("last!!first!!" + input3[2:])
-			structure.append("first!!last!!" + input3[2:])
-			structure.append("f!!last!!" + input3[2:])
-			structure.append("f!!.last!!" + input3[2:])
-			structure.append("f!!_last!!" + input3[2:])
-			structure.append("first!!.l!!" + input3[2:])
-			structure.append("first!!_l!!" + input3[2:])
-			structure.append("last!!.first!!" + input3[2:])
-			structure.append("first!!.last!!" + input3[2:])
-			structure.append("last!!_first!!" + input3[2:])
-			structure.append("first!!_last!!" + input3[2:])
-			structure.append("last!!first!!." + input3)
-			structure.append("first!!last!!." + input3)
-			structure.append("f!!last!!." + input3)
-			structure.append("f!!.last!!." + input3)
-			structure.append("f!!_last!!." + input3)
-			structure.append("first!!.l!!." + input3)
-			structure.append("first!!_l!!." + input3)
-			structure.append("last!!.first!!." + input3)
-			structure.append("first!!.last!!." + input3)
-			structure.append("last!!_first!!." + input3)
-			structure.append("first!!_last!!." + input3)
-			structure.append("last!!first!!_" + input3)
-			structure.append("first!!last!!_" + input3)
-			structure.append("f!!last!!_" + input3)
-			structure.append("f!!.last!!_" + input3)
-			structure.append("f!!_last!!_" + input3)
-			structure.append("first!!.l!!_" + input3)
-			structure.append("first!!_l!!_" + input3)
-			structure.append("last!!.first!!_" + input3)
-			structure.append("first!!.last!!_" + input3)
-			structure.append("last!!_first!!_" + input3)
-			structure.append("first!!_last!!_" + input3)
-			structure.append("last!!first!!." + input3[2:])
-			structure.append("first!!last!!." + input3[2:])
-			structure.append("f!!last!!." + input3[2:])
-			structure.append("f!!.last!!." + input3[2:])
-			structure.append("f!!_last!!." + input3[2:])
-			structure.append("first!!.l!!." + input3[2:])
-			structure.append("first!!_l!!." + input3[2:])
-			structure.append("last!!.first!!." + input3[2:])
-			structure.append("first!!.last!!." + input3[2:])
-			structure.append("last!!_first!!." + input3[2:])
-			structure.append("first!!_last!!." + input3[2:])
-			structure.append("last!!first!!_" + input3[2:])
-			structure.append("first!!last!!_" + input3[2:])
-			structure.append("f!!last!!_" + input3[2:])
-			structure.append("f!!.last!!_" + input3[2:])
-			structure.append("f!!_last!!_" + input3[2:])
-			structure.append("first!!.l!!_" + input3[2:])
-			structure.append("first!!_l!!_" + input3[2:])
-			structure.append("last!!.first!!_" + input3[2:])
-			structure.append("first!!.last!!_" + input3[2:])
-			structure.append("last!!_first!!_" + input3[2:])
-			structure.append("first!!_last!!_" + input3[2:])
+		# Add formats using birth year if specified by the user
+		if birth_input != "no":
+			structure.append("last!!first!!" + birth_input)
+			structure.append("first!!last!!" + birth_input)
+			structure.append("f!!last!!" + birth_input)
+			structure.append("f!!.last!!" + birth_input)
+			structure.append("f!!_last!!" + birth_input)
+			structure.append("first!!.l!!" + birth_input)
+			structure.append("first!!_l!!" + birth_input)
+			structure.append("last!!.first!!" + birth_input)
+			structure.append("first!!.last!!" + birth_input)
+			structure.append("last!!_first!!" + birth_input)
+			structure.append("first!!_last!!" + birth_input)
+			structure.append("last!!first!!" + birth_input[2:])
+			structure.append("first!!last!!" + birth_input[2:])
+			structure.append("f!!last!!" + birth_input[2:])
+			structure.append("f!!.last!!" + birth_input[2:])
+			structure.append("f!!_last!!" + birth_input[2:])
+			structure.append("first!!.l!!" + birth_input[2:])
+			structure.append("first!!_l!!" + birth_input[2:])
+			structure.append("last!!.first!!" + birth_input[2:])
+			structure.append("first!!.last!!" + birth_input[2:])
+			structure.append("last!!_first!!" + birth_input[2:])
+			structure.append("first!!_last!!" + birth_input[2:])
+			structure.append("last!!first!!." + birth_input)
+			structure.append("first!!last!!." + birth_input)
+			structure.append("f!!last!!." + birth_input)
+			structure.append("f!!.last!!." + birth_input)
+			structure.append("f!!_last!!." + birth_input)
+			structure.append("first!!.l!!." + birth_input)
+			structure.append("first!!_l!!." + birth_input)
+			structure.append("last!!.first!!." + birth_input)
+			structure.append("first!!.last!!." + birth_input)
+			structure.append("last!!_first!!." + birth_input)
+			structure.append("first!!_last!!." + birth_input)
+			structure.append("last!!first!!_" + birth_input)
+			structure.append("first!!last!!_" + birth_input)
+			structure.append("f!!last!!_" + birth_input)
+			structure.append("f!!.last!!_" + birth_input)
+			structure.append("f!!_last!!_" + birth_input)
+			structure.append("first!!.l!!_" + birth_input)
+			structure.append("first!!_l!!_" + birth_input)
+			structure.append("last!!.first!!_" + birth_input)
+			structure.append("first!!.last!!_" + birth_input)
+			structure.append("last!!_first!!_" + birth_input)
+			structure.append("first!!_last!!_" + birth_input)
+			structure.append("last!!first!!." + birth_input[2:])
+			structure.append("first!!last!!." + birth_input[2:])
+			structure.append("f!!last!!." + birth_input[2:])
+			structure.append("f!!.last!!." + birth_input[2:])
+			structure.append("f!!_last!!." + birth_input[2:])
+			structure.append("first!!.l!!." + birth_input[2:])
+			structure.append("first!!_l!!." + birth_input[2:])
+			structure.append("last!!.first!!." + birth_input[2:])
+			structure.append("first!!.last!!." + birth_input[2:])
+			structure.append("last!!_first!!." + birth_input[2:])
+			structure.append("first!!_last!!." + birth_input[2:])
+			structure.append("last!!first!!_" + birth_input[2:])
+			structure.append("first!!last!!_" + birth_input[2:])
+			structure.append("f!!last!!_" + birth_input[2:])
+			structure.append("f!!.last!!_" + birth_input[2:])
+			structure.append("f!!_last!!_" + birth_input[2:])
+			structure.append("first!!.l!!_" + birth_input[2:])
+			structure.append("first!!_l!!_" + birth_input[2:])
+			structure.append("last!!.first!!_" + birth_input[2:])
+			structure.append("first!!.last!!_" + birth_input[2:])
+			structure.append("last!!_first!!_" + birth_input[2:])
+			structure.append("first!!_last!!_" + birth_input[2:])
 
-		if input4 != "no":
-			structure.append(input4)
+		# Add username format if specified by the user
+		if username_input != "no":
+			structure.append(username_input)
 
 			# add birth date to usernames only if specified by user
-			if input3 != "no":
-				structure.append(input4 + input3)
-				structure.append(input4 + input3[2:])
-				structure.append(input4 + "." + input3)
-				structure.append(input4 + "_" + input3)
-				structure.append(input4 + "." + input3[2:])
-				structure.append(input4 + "_" + input3[2:])
+			if birth_input != "no":
+				structure.append(username_input + birth_input)
+				structure.append(username_input + birth_input[2:])
+				structure.append(username_input + "." + birth_input)
+				structure.append(username_input + "_" + birth_input)
+				structure.append(username_input + "." + birth_input[2:])
+				structure.append(username_input + "_" + birth_input[2:])
 
 		# Switch f!! with first letter of name, l!! with first letter of surname, first!! with first name and last!! with surname
 		found_first = False
 		found_last = False
 		for x in structure:
 			if x.find("first!!") != -1:
-				x = x.replace("first!!", input1)
+				x = x.replace("first!!", name_input)
 				found_first = True
 			if x.find("last!!") != -1:
-				x = x.replace("last!!", input2)
+				x = x.replace("last!!", last_name_input)
 				found_last = True
 			if x.find("f!!") != -1:
-				x = x.replace("f!!", input1[0])
+				x = x.replace("f!!", name_input[0])
 			if x.find("l!!") != -1:
-				x = x.replace("l!!", input2[0])
+				x = x.replace("l!!", last_name_input[0])
 			emails.append(x + "@" + dom)
 
 
@@ -156,16 +165,14 @@ while True == True:
 		match = re.match(regex, addressToVerify)
 		if match == None:
 			print("verifying " + red + n + reset + "... Bad Syntax")
-			# raise ValueError('Bad Syntax')
 		else:
 			print("verifying " + green + n + reset + "... Good Syntax")
+			# if good syntax, add to e-mail addresses to be checked
 			emails_for_verification.append(n)
 
+	# If there are valid syntaxed e-mail, check them. Otherwise return an error message to the user.
 	if len(emails_for_verification) != 0:
 		print("Checking e-mails with good syntax...")
-		# print("Checking following emails: ")
-		# for email in emails_for_verification:
-			# print(email)  # Verify addresses
 	else:
 		print("There is no e-mail with valid syntax to check.")
 
@@ -173,15 +180,16 @@ while True == True:
 	if len(emails_for_verification) != 0:
 		for mailcheck in emails_for_verification:
 
-			# print("https://www.skypli.com/search/" + mailcheck)
 			url = "https://www.skypli.com/search/" + mailcheck
 			page = requests.get(url)
 			soup = BeautifulSoup(page.content, "html.parser")
 			results = soup.find_all(class_="search-results__title")
 
+			# If an e-mail was found registered to only one user in Skype, print his details
+			# Else if found registered to multiple users, show link to the tool user to decide if he wants to see more info
+			# Else if found on breached database, return that the e-mail address is found to be Pwned
+			# Else, return that the e-mail was not found to be pwned (does not exist)
 			for n in results:
-				# print("Skype")
-				# print(n)
 				if n.text.strip() == "1 results for " + mailcheck:
 					final_emails_text.insert(0, mailcheck)
 					print(blue + mailcheck + reset + " was found in Skype")
@@ -199,14 +207,12 @@ while True == True:
 					print(blue + mailcheck + reset + " was found in multiple Skype accounts")
 					final_emails.insert(0, blue + mailcheck + reset + " Multiple skype accounts found: " + url + "\n") # Add it to the top of the list in order to be shown first as Skype account
 				else:
-					# print("https://haveibeenpwned.com/account/" + mailcheck)
 					url = "https://haveibeenpwned.com/account/" + mailcheck
 					page = requests.get(url)
 					soup = BeautifulSoup(page.content, 'html.parser')
 					results = soup.find_all(id="pwnCount")  # class_='pwnTitle'
 					# print(results)
 					for n in results:
-						# print("HaveIBeenPwned")
 						if n.text.strip() == "Not pwned in any data breaches and found no pastes (subscribe to search sensitive breaches)":
 							print(green + mailcheck + reset + " not found in breached database.")
 						else:
@@ -215,7 +221,7 @@ while True == True:
 							final_emails.append(red + mailcheck + reset + "\n") # Add it to the bottom of the list as breached with no additional details
 					time.sleep(random.randint(5, 8)) # Add a random delay between 5 and 8 to not let your IP get banned
 
-	# emails that were found on skype or pwned
+	# Show user all e-mails that were found on skype or pwned
 	print("")
 	print("-------------------------------------")
 	print("")
@@ -223,11 +229,11 @@ while True == True:
 	for finalEmail in final_emails:
 		print(finalEmail)
 
-	# Write txt file with all emails found
+	# Write results.txt file with all emails found in clear form
 	print("")
 	print("Creating txt file...")
 	f = open("results.txt", "w")
 	for finalEmail in final_emails_text:
 		f.write(finalEmail + "\n")
 	print(f.name + " created!")
-	f.close()
+	f.close()  # close file after writing
