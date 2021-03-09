@@ -65,19 +65,22 @@ The script also provides a "results.txt" at the end, that is saved to the same f
 The script runs continuously so after each search, it will restart from the beggining asking for the next inputs.
 
 ## FAQs
-Q: How do you search in Skype for email addresses?
+**Q: How do you search in Skype for email addresses?**
 A: Skype allows you to search an e-mail addresses and immediately matches that to a name/username/birthdate/country. Meaning you get an immediate way to eliminate
 potential e-mail addresses that do not belong to your target. Until now I have not found other similar tools but I am working on it
 
-Q: Why do you search haveIbeenPwned for breached data?
+**Q: Why do you search haveIbeenPwned for breached data?**
 A: haveIbeenPwned is a trustworthy site containing most known breach databases. It also allows you to search indefinitely for free and I want to keep this tool
 free for anyone to use without having to pay for commercial products or APIs
 
-Q: Why are your queries slow for each e-mail address produced?
+**Q: Why are your queries slow for each e-mail address produced?**
 A: In order to avoid getting an IP flag for a potential DDoS attack, I am using a random waiting time between 5-8 seconds before each query in these sites.
 Unfortunately, this makes the processing time higher than just a second for each query. I am working on it, to make it run faster. Will update if I figure a way to do so.
 
-Q: I believe you could have implemented a better script.
+**Q: Why do you generate a .txt file with results at the end?**
+A: OSINT investigators can use this output to run their own searches after the end of each search. I will post here in the future ways a .txt output of found e-mails can help you in your OSINT investigations.
+
+**Q: I believe you could have implemented a better script.**
 A: Please feel free to contact me or contribute yourself in this project, by checking the next sections.
 
 ## Contributing
@@ -89,6 +92,8 @@ Right now I am working on the following TODO list:
 - [ ] Find more or alternative sites to search-query in order to validate e-mail addresses (not breached data)
 - [ ] Find a way to query haveIbeenPwned (or similar) site faster without having to wait for 5-8 random time duration and not getting IP banned
 - [ ] Add more username formats that people use often before the @ symbol on e-mails and add them to the tool
+- [ ] Allow users to parse a preconfigured .txt file with email formats or/and domains, so that they can automatically input the same preferences whenever they run a search without having to manually input the same things each time
+- [ ] Allow users to choose between a results.txt or a results.csv or a results.xls file as output with useful formats for an OSINT investigator
 
 ## Feedback and Questions
 For any feedback or questions please contact me on https://twitter.com/whinspector or theinspector32@protonmail.com
