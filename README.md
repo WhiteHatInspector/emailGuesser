@@ -51,3 +51,7 @@ The script also provides a "results.txt" at the end, that is saved to the same f
 The script runs continuously so after each search, it will restart from the beggining asking for the next inputs.
 
 For any feedback or questions please contact me on https://twitter.com/whinspector or theinspector32@protonmail.com
+
+## License
+MIT (c) emailGuesser
+created by White Hat Inspector
