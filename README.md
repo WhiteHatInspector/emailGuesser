@@ -46,7 +46,7 @@ containing the following:
 - first!! (target's first name), 
 - l!! (first char of the target's last name) and 
 - last!! (target's last name).
-Example: f!!+last!!
+Example: f!!+last!! --> j+smith@domain
 
 Add domains: Input all domains that you wish to contact a search to, separated by a single comma (e.g. yahoo.com,gmail.com)
 ```
