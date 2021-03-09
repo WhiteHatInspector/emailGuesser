@@ -67,6 +67,9 @@ The script runs continuously so after each search, it will restart from the begg
 A: Skype allows you to search an e-mail addresses and immediately matches that to a name/username/birthdate/country. Meaning you get an immediate way to eliminate
 potential e-mail addresses that do not belong to your target. Until now I have not found other similar tools but I am working on it
 
+**Q: Why sometimes Skype results in multiple users, using the same e-mail address?** <br/>
+A: For now I can only guess Skype doesn't verify its users e-mail addresses (used for registration), therefore anyone can use whatever e-mail address to register. I will check this more and update this section.
+
 **Q: Why do you search haveIbeenPwned for breached data?** <br/>
 A: haveIbeenPwned is a trustworthy site containing most known breach databases. It also allows you to search indefinitely for free and I want to keep this tool
 free for anyone to use without having to pay for commercial products or APIs
@@ -76,7 +79,7 @@ A: In order to avoid getting an IP flag for a potential DDoS attack, I am using 
 Unfortunately, this makes the processing time higher than just a second for each query. I am working on it, to make it run faster. Will update if I figure a way to do so.
 
 **Q: Why do you generate a .txt file with results at the end?** <br/>
-A: OSINT investigators can use this output to run their own searches after the end of each search. I will post here in the future ways a .txt output of found e-mails can help you in your OSINT investigations.
+A: OSINT investigators can use this output to run their own searches after the end of each search. I will post here in the future, for ways a .txt output of found e-mails can help you in your OSINT investigations.
 
 **Q: I run the script but I didn't find the e-mail address of my target. Why?** <br/>
 A: The script checks all e-mail formats that users tend to use most often. This means that if your target doesn't use a common format for his e-mail address, you won't be able to find it this way unless you have a clue of its format (so that you can input that format yourself). Also this tool has more chances of finding the e-mail address of your target, if your target has a more unique name. The more unique name a target has, the better. For example, John Smith is a common name and your target will most probably try using other e-mail formats when registering his e-mail address, because the common formats are probably already taken, at the time of his e-mail registration.
@@ -100,6 +103,7 @@ Right now I am working on the following TODO list:
 - [ ] Allow users to choose between a results.txt or a results.csv or a results.xls file as output with useful formats for an OSINT investigator
 - [ ] Remove preconfigured e-mail formats that are actually not often used by people in their e-mail addresses, to reduce execution time
 - [ ] Reduce execution time by any means necessary
+- [ ] Add new functions and a menu with different choices
 
 ## Feedback and Questions
 For any feedback or questions please contact me on https://twitter.com/whinspector or theinspector32@protonmail.com
@@ -108,40 +112,40 @@ For any feedback or questions please contact me on https://twitter.com/whinspect
 MIT © 2021 emailGuesser <br/>
 Created by [White Hat Inspector](https://twitter.com/whinspector)
 
-                                                 `-/+.   `++:.                                      
-                                           .:+sdNMMMMMh+yNMMMMNdyo/.                                
-                                          -MMMMMMMMMMMMMMMMMMMMMMMMM+                               
-                                          yMMMMMMMMMMMMMMMMMMMMMMMMMN`                              
-                                         -MMMMMMMMMMMMMMMMMMMMMMMMMMM+                              
-                                         yMMMMMMMMMMMMMMMMMMMMMMMMMMMN                              
-                                        .MMMMMMMMMMMMMMMMMMMMMMMMMMMMM+                             
-                                        yMMMMMMMMMMMMMMMMMMMMMMMMMMMMMm`                            
-                                       .MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM+                            
-                                       yMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMm                            
-                                      .MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM/                           
-                                 ..   /MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMs   ..`                     
-                       `.:/oshdNMMMd+` `+dMMMMMMMMMMMMMMMMMMMMMMMMMMMms.  /hMMMNdhso/:.`            
-                     `+dMMMMMMMMMMMMMMh+. ./sdNMMMMMMMMMMMMMMMMMMmy+. `/yNMMMMMMMMMMMMMms.          
-                      ` `/ymMMMMMMMMMMMMMmy+:` .:/osyyhhhyyso+:.``-+smMMMMMMMMMMMMMNh+.  `          
-                  ./yNo     -odMMMMMMMMMMMMMMMNdyso+/::::://osydmMMMMMMMMMMMMMMMms:     :Mh+-       
-                +dMMMMN.       `/yNMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMNh+.        dMMMMms`    
-               .dMMMMMMh`o+:.`     -odMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMms:     `-/+/ oMMMMMMN:    
-                 /mMMMMMy-NMMMNdhs    `/ymMMMMMMMMMMMMMMMMMMMMMMMMMMMNh+.   `yhmNMMMd`/MMMMMNo`     
-                   oNMMMMy-NMMMMMMh       .+yNMMMMMMMMMMMMMMMMMMMNho-      `mMMMMMMd`/MMMMMy.       
-                    `sMMMMh-mMMMMMMy          ./ohmMMMMMMMMMNds+-         `dMMMMMMh`oMMMMh-         
-                      .yMMMd-hMMMMMMy  ``           `.-:--.`          `. `dMMMMMMs`sMMMd:           
-                        -dMMN:oMMMMMMs `:/::-.``               ``.--:/:``dMMMMMN/`dMMm/             
-                          :mMM+:NMMMMMs  -////////:::::--:::::///////:``hMMMMMd.:NMN+               
-                            +NMh-hMMMMMs  ://////////////////////////` hMMMMMs`oMMs`                
-                             `dMN:+MMMMM+ `:////////////////////////. yMMMMN:.dMN-                  
-                           :yNMMMMs-dMMMM+ `://////////////////////. yMMMMh`/NMMMMh/`               
-                         /NMMMMMMMMm:oMMMMo `:////////////////////.`hMMMN/.hMMMMMMMMMs              
-                          .omMMMMMMMMs-dMMMh. ./////////////////-`-mMMMh./NMMMMMMMNy:               
-                             -sNMMMMMMm:oMMMNo``.:////////////-``yMMMN/.hMMMMMMNh/`                 
-                                :sNMMMMMs:dMMMN+` .:///////:-``sNMMMy`+NMMMMNh/`                    
-                                   :sNMMMm/+NMMMNo` `-///:. .sNMMMm:.dMMMNy/`                       
-                                      :sNMMy-hMMMMMo  `.`  yMMMMMs`oMMMh/`                          
-                                         :yMN+/NMMMN`     -MMMMd-:mMd+`                             
-                                           `+md:sMMM/     sMMNo`yNs.                                
-                                              :ys:mMy     mMh./h/                                   
-                                                .o:oN`   -N/.o:                                     
+                                                                  `-/+.   `++:.                                      
+                                                            .:+sdNMMMMMh+yNMMMMNdyo/.                                
+                                                           -MMMMMMMMMMMMMMMMMMMMMMMMM+                               
+                                                           yMMMMMMMMMMMMMMMMMMMMMMMMMN`                              
+                                                          -MMMMMMMMMMMMMMMMMMMMMMMMMMM+                              
+                                                          yMMMMMMMMMMMMMMMMMMMMMMMMMMMN                              
+                                                         .MMMMMMMMMMMMMMMMMMMMMMMMMMMMM+                             
+                                                         yMMMMMMMMMMMMMMMMMMMMMMMMMMMMMm`                            
+                                                        .MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM+                            
+                                                        yMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMm                            
+                                                       .MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM/                           
+                                                  ..   /MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMs   ..`                     
+                                        `.:/oshdNMMMd+` `+dMMMMMMMMMMMMMMMMMMMMMMMMMMMms.  /hMMMNdhso/:.`            
+                                      `+dMMMMMMMMMMMMMMh+. ./sdNMMMMMMMMMMMMMMMMMMmy+. `/yNMMMMMMMMMMMMMms.          
+                                       ` `/ymMMMMMMMMMMMMMmy+:` .:/osyyhhhyyso+:.``-+smMMMMMMMMMMMMMNh+.  `          
+                                   ./yNo     -odMMMMMMMMMMMMMMMNdyso+/::::://osydmMMMMMMMMMMMMMMMms:     :Mh+-       
+                                 +dMMMMN.       `/yNMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMNh+.        dMMMMms`    
+                                .dMMMMMMh`o+:.`     -odMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMms:     `-/+/ oMMMMMMN:    
+                                  /mMMMMMy-NMMMNdhs    `/ymMMMMMMMMMMMMMMMMMMMMMMMMMMMNh+.   `yhmNMMMd`/MMMMMNo`     
+                                    oNMMMMy-NMMMMMMh       .+yNMMMMMMMMMMMMMMMMMMMNho-      `mMMMMMMd`/MMMMMy.       
+                                     `sMMMMh-mMMMMMMy          ./ohmMMMMMMMMMNds+-         `dMMMMMMh`oMMMMh-         
+                                       .yMMMd-hMMMMMMy  ``           `.-:--.`          `. `dMMMMMMs`sMMMd:           
+                                         -dMMN:oMMMMMMs `:/::-.``               ``.--:/:``dMMMMMN/`dMMm/             
+                                           :mMM+:NMMMMMs  -////////:::::--:::::///////:``hMMMMMd.:NMN+               
+                                             +NMh-hMMMMMs  ://////////////////////////` hMMMMMs`oMMs`                
+                                              `dMN:+MMMMM+ `:////////////////////////. yMMMMN:.dMN-                  
+                                            :yNMMMMs-dMMMM+ `://////////////////////. yMMMMh`/NMMMMh/`               
+                                          /NMMMMMMMMm:oMMMMo `:////////////////////.`hMMMN/.hMMMMMMMMMs              
+                                           .omMMMMMMMMs-dMMMh. ./////////////////-`-mMMMh./NMMMMMMMNy:               
+                                              -sNMMMMMMm:oMMMNo``.:////////////-``yMMMN/.hMMMMMMNh/`                 
+                                                 :sNMMMMMs:dMMMN+` .:///////:-``sNMMMy`+NMMMMNh/`                    
+                                                    :sNMMMm/+NMMMNo` `-///:. .sNMMMm:.dMMMNy/`                       
+                                                       :sNMMy-hMMMMMo  `.`  yMMMMMs`oMMMh/`                          
+                                                          :yMN+/NMMMN`     -MMMMd-:mMd+`                             
+                                                            `+md:sMMM/     sMMNo`yNs.                                
+                                                               :ys:mMy     mMh./h/                                   
+                                                                 .o:oN`   -N/.o:                                     
