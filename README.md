@@ -65,7 +65,7 @@ The script also provides a "results.txt" at the end, that is saved to the same f
 The script runs continuously so after each search, it will restart from the beggining asking for the next inputs.
 
 ## FAQs
-**Q: How do you search in Skype for email addresses?**
+**Q: How do you search in Skype for email addresses?** <br/>
 A: Skype allows you to search an e-mail addresses and immediately matches that to a name/username/birthdate/country. Meaning you get an immediate way to eliminate
 potential e-mail addresses that do not belong to your target. Until now I have not found other similar tools but I am working on it
 
