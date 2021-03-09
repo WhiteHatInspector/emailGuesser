@@ -54,7 +54,7 @@ The script will check the structure of the e-mail addresses that were automatica
 1. Skype (using the skypli.com site)
 2. Breached databases (using the haveibeenpwned.com site)
 
-You can find a list of preconfigured e-mail formats that the site will search, even if not specified otherwise by user, [here](https://github.com/WhiteHatInspector/emailGuesser/blob/main/Preconfigured%20e-mail%20formats.md).
+You can find a list of preconfigured e-mail formats that the tool will search, even if not specified otherwise by the user, [here](https://github.com/WhiteHatInspector/emailGuesser/blob/main/Preconfigured%20e-mail%20formats.md).
 
 All e-mail addresses that are found in any of these sites, will return to the user at the end of the script, containing further info.
 
