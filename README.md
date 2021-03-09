@@ -100,4 +100,4 @@ For any feedback or questions please contact me on https://twitter.com/whinspect
 
 ## License
 MIT © 2021 emailGuesser <br/>
-Created by White Hat Inspector
+Created by [White Hat Inspector](https://twitter.com/whinspector)
