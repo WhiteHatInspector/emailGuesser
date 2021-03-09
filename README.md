@@ -69,18 +69,18 @@ The script runs continuously so after each search, it will restart from the begg
 A: Skype allows you to search an e-mail addresses and immediately matches that to a name/username/birthdate/country. Meaning you get an immediate way to eliminate
 potential e-mail addresses that do not belong to your target. Until now I have not found other similar tools but I am working on it
 
-**Q: Why do you search haveIbeenPwned for breached data?**
+**Q: Why do you search haveIbeenPwned for breached data?** <br/>
 A: haveIbeenPwned is a trustworthy site containing most known breach databases. It also allows you to search indefinitely for free and I want to keep this tool
 free for anyone to use without having to pay for commercial products or APIs
 
-**Q: Why are your queries slow for each e-mail address produced?**
+**Q: Why are your queries slow for each e-mail address produced?** <br/>
 A: In order to avoid getting an IP flag for a potential DDoS attack, I am using a random waiting time between 5-8 seconds before each query in these sites.
 Unfortunately, this makes the processing time higher than just a second for each query. I am working on it, to make it run faster. Will update if I figure a way to do so.
 
-**Q: Why do you generate a .txt file with results at the end?**
+**Q: Why do you generate a .txt file with results at the end?** <br/>
 A: OSINT investigators can use this output to run their own searches after the end of each search. I will post here in the future ways a .txt output of found e-mails can help you in your OSINT investigations.
 
-**Q: I believe you could have implemented a better script.**
+**Q: I believe you could have implemented a better script.** <br/>
 A: Please feel free to contact me or contribute yourself in this project, by checking the next sections.
 
 ## Contributing
@@ -99,5 +99,5 @@ Right now I am working on the following TODO list:
 For any feedback or questions please contact me on https://twitter.com/whinspector or theinspector32@protonmail.com
 
 ## License
-MIT © emailGuesser
+MIT © 2021 emailGuesser
 created by White Hat Inspector
