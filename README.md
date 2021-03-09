@@ -13,9 +13,10 @@ It is highly advisable to run the script using a VPN to enhance your privacy pro
 ## Installation
 To install this project run: 
 
-```$ git clone https://github.com/WhiteHatInspector/emailGuesser
-cd emailGuesser
-python3 emailGuesser.py
+```
+$ git clone https://github.com/WhiteHatInspector/emailGuesser
+$ cd emailGuesser
+$ python3 emailGuesser.py
 ```
 
 ## Usage
