@@ -92,6 +92,8 @@ Right now I am working on the following TODO list:
 - [ ] Add more username formats that people use often before the @ symbol on e-mails and add them to the tool
 - [ ] Allow users to parse a preconfigured .txt file with email formats or/and domains, so that they can automatically input the same preferences whenever they run a search without having to manually input the same things each time
 - [ ] Allow users to choose between a results.txt or a results.csv or a results.xls file as output with useful formats for an OSINT investigator
+- [ ] Remove preconfigured e-mail formats that are actually not often used by people in their e-mail addresses, to reduce execution time
+- [ ] Reduce execution time by any means necessary
 
 ## Feedback and Questions
 For any feedback or questions please contact me on https://twitter.com/whinspector or theinspector32@protonmail.com
