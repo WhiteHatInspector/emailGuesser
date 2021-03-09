@@ -13,7 +13,7 @@ It is highly advisable to run the script using a VPN to enhance your privacy pro
 ## Installation
 To install this project run: 
 
-```
+```bash
 # clone the repo
 $ git clone https://github.com/WhiteHatInspector/emailGuesser
 
