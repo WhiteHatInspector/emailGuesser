@@ -9,9 +9,9 @@ Below is a table containing all preconfigured e-mail formats by the script (will
 - {username} means (known) username input given by the user
 - @domain means the part of the e-mail address following the @ symbol and will be generated according to input given by the user
 
-The first column contains all formats that will be tested for the name and surname inputs of the user
-The second column contains all formats that will be tested if user inputs also a birth year for the target
-The third column contains all formats that will be tested if user inputs also a known username for the target
+The first column contains all formats that will be tested for the name and surname inputs of the user <br/>
+The second column contains all formats that will be tested if user inputs also a birth year for the target <br/>
+The third column contains all formats that will be tested if user inputs also a known username for the target <br/>
 
 | Name/Surname        | Birth year input (e.g. 1963)           | Username        |
 | -------------       | :-------------:                        | -----:          |
