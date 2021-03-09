@@ -78,8 +78,14 @@ Unfortunately, this makes the processing time higher than just a second for each
 **Q: Why do you generate a .txt file with results at the end?** <br/>
 A: OSINT investigators can use this output to run their own searches after the end of each search. I will post here in the future ways a .txt output of found e-mails can help you in your OSINT investigations.
 
-**Q: I believe you could have implemented a better script.** <br/>
+**Q: I run the script but I didn't find the e-mail address of my target. Why?** <br/>
+A: The script checks all e-mail formats that users tend to use most often. This means that if your target doesn't use a common format for his e-mail address, you won't be able to find it this way unless you have a clue of its format (so that you can input that format yourself). Also this tool has more chances of finding the e-mail address of your target, if your target has a more unique name. The more unique name a target has, the better. For example, John Smith is a common name and your target will most probably try using other e-mail formats when registering his e-mail address, because the common formats are probably already taken, at the time of his e-mail registration.
+
+**Q: I believe you could have implemented this script in a better way. What can I do about it?** <br/>
 A: Please feel free to contact me or contribute yourself in this project, by checking the next sections.
+
+**Q: Do you actively maintain this tool?** <br/>
+A: Yes. In case this changes, I will update this readme file.
 
 ## Contributing
 If you would like to contribute to this project, you are welcome to do so. Each and every contribution is greatly valued! Keep in mind that this tool must remain
