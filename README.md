@@ -5,6 +5,8 @@ Introducing emailGuesser!
 
 **emailGuesser** is an Open Source Intelligence (OSINT) tool which helps users "guess" their target's email address based on multiple inputs and preferences.
 
+![emailGuesser gif](emailGuesser.gif)
+
 **DISCLAIMER**: This tool is for research purposes only.
 Use this tool responsibly and ethically! You will be reliable for any abuse or harm, you may cause using it.
 
