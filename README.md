@@ -22,6 +22,9 @@ $ git clone https://github.com/WhiteHatInspector/emailGuesser
 # change the working directory to emailGuesser
 $ cd emailGuesser
 
+# install requirements
+python3 -m pip install -r requirements.txt
+
 # run the script
 $ python3 emailGuesser.py
 ```
@@ -60,7 +63,7 @@ You can find a list of preconfigured e-mail formats that the tool will search, e
 
 All e-mail addresses that are found in any of these sites, will return to the user at the end of the script, containing further info.
 
-The script also provides a "results.txt" at the end, that is saved to the same folder as the .py file, that the user can use for any further investigation.
+The script also provides a "results.txt" and a "resultscsv.csv" file at the end, that is saved to the same folder as the .py file, that the user can use for any further investigation.
 
 The script runs continuously so after each search, it will restart from the beggining asking for the next inputs.
 
@@ -102,9 +105,9 @@ Right now I am working on the following TODO list:
 - [ ] Find a way to query haveIbeenPwned (or similar) site faster without having to wait for 5-8 random time duration and not getting IP banned (public proxies?)
 - [ ] Add more username formats that people use often before the @ symbol on e-mails and add them to the tool
 - [ ] Allow users to parse a preconfigured .txt file with email formats or/and domains, so that they can automatically input the same preferences every time they run a search, without having to manually input the same things each time
-- [ ] Allow users to choose between a results.txt or a results.csv or a results.xls file as output with useful formats for an OSINT investigator
+- [X] Output a results.txt and a results.csv file with useful formats for an OSINT investigator
 - [ ] Remove preconfigured e-mail formats that are actually not often used by people in their e-mail addresses, to reduce execution time
-- [ ] Reduce execution time by any means necessary
+- [ ] Reduce execution time by any means necessary (Right now it has an average run time of 8-10 seconds/e-mail address searched)
 - [ ] Add new functions and a menu with different choices
 
 ## Feedback and Questions

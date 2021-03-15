@@ -4,6 +4,8 @@ import requests
 from bs4 import BeautifulSoup
 import time
 import random
+import csv
+
 
 # Colours to be added in text output to make it more readable and user-friendly
 red = "\033[31m"
@@ -14,9 +16,10 @@ reset = "\033[39m"
 
 # Initial screen
 print("Welcome to " + green + "emailGuesser" + reset + "!\nDeveloped by " + blue + "White Hat Inspector (@WHInspector)" + reset + ".\nFor feedback and/or questions send me a private message on " + blue + "https://twitter.com/whinspector" + reset)
+print("")
 
 # User inputs
-while True == True:
+while True:
 	name_input = input(yellow + 'Please enter name: ' + reset)
 	last_name_input = input(yellow + "Please enter surname: " + reset)
 	birth_input = input(yellow + "Please enter birth year (or no): " + reset)
@@ -27,23 +30,25 @@ while True == True:
 		birth_input = "no"
 
 	# Ask user if he wants to add more e-mail formats than the ones already preconfigured
-	extra_formats_input = input("Would you like to add more e-mail formats apart from the preconfigured ones? (y/n) ")
+	extra_formats_input = input(yellow + "Would you like to add more e-mail formats apart from the preconfigured ones? (y/n) " + reset)
 	while extra_formats_input != "y" and extra_formats_input != "n":
 		print(red + "Please select a valid input." + reset)
-		extra_formats_input = input("Would you like to add more combinations than the preconfigured ones? (y/n) ")
+		extra_formats_input = input(yellow + "Would you like to add more combinations than the preconfigured ones? (y/n) " + reset)
 
 	extra_formats = []
 	if extra_formats_input == "y":
-		extra_formats = input("Provide all extra formats you wish to examine, separated by commas: ").split(",")
+		extra_formats = input(yellow + "Provide all extra formats you wish to examine, separated by commas: " + reset).split(",")
 
 	# User input about all domains to be searched
-	domain = input("Please enter domains separated by a single comma: ").split(",")
+	domain = input(yellow + "Please enter domains separated by a single comma: " + reset).split(",")
 
 	# Lists with which we will work during the script
 	emails = []
 	emails_for_verification = []
 	final_emails = []
 	final_emails_text = []
+
+	startSearching = time.perf_counter()
 
 	# for every domain specified by user, make combinations and add them to the list
 	for dom in domain:
@@ -178,6 +183,10 @@ while True == True:
 
 	# check Skypli for speed then check haveibeenpwned if not found on skype
 	if len(emails_for_verification) != 0:
+
+		# Initialize request timer for first iteration of beenPwned
+		requestPwnedStartTimer = 0
+
 		for mailcheck in emails_for_verification:
 
 			url = "https://www.skypli.com/search/" + mailcheck
@@ -207,6 +216,15 @@ while True == True:
 					print(blue + mailcheck + reset + " was found in multiple Skype accounts")
 					final_emails.insert(0, blue + mailcheck + reset + " Multiple skype accounts found: " + url + "\n") # Add it to the top of the list in order to be shown first as Skype account
 				else:
+					# Count time elapsed since last haveIbeenPwned iteration/check
+					requestPwnedEndTimer = time.perf_counter()
+					requestPwnedTimePassed = requestPwnedEndTimer - requestPwnedStartTimer
+
+					# Add a random delay between 7 and 11 seconds to not let your IP get banned
+					randomTimePassed = random.randint(7, 11)
+					if requestPwnedTimePassed < randomTimePassed:
+						time.sleep(randomTimePassed - requestPwnedTimePassed)
+
 					url = "https://haveibeenpwned.com/account/" + mailcheck
 					page = requests.get(url)
 					soup = BeautifulSoup(page.content, 'html.parser')
@@ -219,7 +237,9 @@ while True == True:
 							print(red + mailcheck + reset + " was found to be " + red + "Pwned!" + reset)
 							final_emails_text.append(mailcheck)
 							final_emails.append(red + mailcheck + reset + "\n") # Add it to the bottom of the list as breached with no additional details
-					time.sleep(random.randint(5, 8)) # Add a random delay between 5 and 8 to not let your IP get banned
+
+					# Restart timer
+					requestPwnedStartTimer = time.perf_counter()
 
 	# Show user all e-mails that were found on skype or pwned
 	print("")
@@ -229,6 +249,8 @@ while True == True:
 	for finalEmail in final_emails:
 		print(finalEmail)
 
+	endSearching = time.perf_counter()
+
 	# Write results.txt file with all emails found in clear form
 	print("")
 	print("Creating txt file...")
@@ -237,3 +259,16 @@ while True == True:
 		f.write(finalEmail + "\n")
 	print(f.name + " created!")
 	f.close()  # close file after writing
+
+	# Write resultscsv.csv file with all emails found in clear form
+	print("")
+	print("Creating csv file...")
+	with open('resultscsv.csv', 'w', newline='') as resultscsv:
+		resultswriter = csv.writer(resultscsv, delimiter=',', quotechar='"', quoting=csv.QUOTE_MINIMAL)
+		for finalEmail in final_emails_text:
+			resultswriter.writerow([finalEmail])
+	print("resultscsv.csv created!")
+
+	print("")
+	print(f"Your search lasted for {endSearching - startSearching:0.4f} seconds.\nEmails queried where {len(emails_for_verification)} in total.\nAverage time per e-mail address was {(endSearching - startSearching)/len(emails_for_verification):0.2f}.")
+	print("")
