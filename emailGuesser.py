@@ -251,24 +251,34 @@ while True:
 
 	endSearching = time.perf_counter()
 
-	# Write results.txt file with all emails found in clear form
+	# Ask user if he wants output in txt or csv format
 	print("")
-	print("Creating txt file...")
-	f = open("results.txt", "w")
-	for finalEmail in final_emails_text:
-		f.write(finalEmail + "\n")
-	print(f.name + " created!")
-	f.close()  # close file after writing
+	outputs = "0"
+	while outputs != "1" and outputs != "2" and outputs != "3" and outputs != "4":
+		outputs = input(yellow + "Would you like any outputs?\n[1] No\n[2] .txt file\n[3] .csv file\n[4] Both\nYour choice: " + reset)
+		if outputs != "1" and outputs != "2" and outputs != "3" and outputs != "4":
+			print(red + "Please select 1,2,3 or 4!" + reset)
+
+	# Write results.txt file with all emails found in clear form
+	if outputs == "2" or outputs == "4":
+		print("")
+		print("Creating txt file...")
+		f = open("results.txt", "w")
+		for finalEmail in final_emails_text:
+			f.write(finalEmail + "\n")
+		print(f.name + " created!")
+		f.close()  # close file after writing
 
 	# Write resultscsv.csv file with all emails found in clear form
-	print("")
-	print("Creating csv file...")
-	with open('resultscsv.csv', 'w', newline='') as resultscsv:
-		resultswriter = csv.writer(resultscsv, delimiter=',', quotechar='"', quoting=csv.QUOTE_MINIMAL)
-		for finalEmail in final_emails_text:
-			resultswriter.writerow([finalEmail])
-	print("resultscsv.csv created!")
+	if outputs == "3" or outputs == "4":
+		print("")
+		print("Creating csv file...")
+		with open('resultscsv.csv', 'w', newline='') as resultscsv:
+			resultswriter = csv.writer(resultscsv, delimiter=',', quotechar='"', quoting=csv.QUOTE_MINIMAL)
+			for finalEmail in final_emails_text:
+				resultswriter.writerow([finalEmail])
+		print("resultscsv.csv created!")
 
 	print("")
-	print(f"Your search lasted for {endSearching - startSearching:0.4f} seconds.\nEmails queried where {len(emails_for_verification)} in total.\nAverage time per e-mail address was {(endSearching - startSearching)/len(emails_for_verification):0.2f}.")
+	print(f"Your search lasted for {endSearching - startSearching:0.4f} seconds.\nEmails queried where {len(emails_for_verification)} in total.\nAverage verification time per e-mail address was {(endSearching - startSearching)/len(emails_for_verification):0.2f}.")
 	print("")

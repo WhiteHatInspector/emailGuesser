@@ -95,6 +95,9 @@ A: Please feel free to contact me or contribute yourself in this project, by che
 **Q: Do you actively maintain this tool?** <br/>
 A: Yes. In case this changes, I will update this readme file.
 
+**Q: This is a great tool. I want to help you make it better or make more like this. What can I do?** <br/>
+A: If you would like to support me in sharing free content to the OSINT community, consider buying me a coffee. <a href="https://www.buymeacoffee.com/WHInspector" target="_blank"><img src="https://cdn.buymeacoffee.com/buttons/v2/default-blue.png" alt="Buy Me A Coffee" style="height: 60px !important;width: 217px !important;" ></a>
+
 ## Contributing
 If you would like to contribute to this project, you are welcome to do so. Each and every contribution is greatly valued! Keep in mind that this tool must remain
 free to use for everyone, so don't use paid APIs (like Dehashed) but try finding a work around.
