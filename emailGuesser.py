@@ -6,7 +6,6 @@ import time
 import random
 import csv
 
-
 # Colours to be added in text output to make it more readable and user-friendly
 red = "\033[31m"
 green = "\033[32m"
@@ -24,6 +23,11 @@ while True:
 	last_name_input = input(yellow + "Please enter surname: " + reset)
 	birth_input = input(yellow + "Please enter birth year (or no): " + reset)
 	username_input = input(yellow + "Please enter username (or no): " + reset)
+	skype_input = "blank"
+	while skype_input != "y" and skype_input != "n":
+		skype_input = input(yellow + "Would you like to automatically add to the pool Skype usernames from people using this name in Skype? (y/n) " + reset)
+		if skype_input != "y" and skype_input != "n":
+			print(red + "Please input 'y' or 'n'!" + reset)
 
 	# Check if birth year is 4 digits long
 	if len(birth_input) != 4:
@@ -40,7 +44,11 @@ while True:
 		extra_formats = input(yellow + "Provide all extra formats you wish to examine, separated by commas: " + reset).split(",")
 
 	# User input about all domains to be searched
-	domain = input(yellow + "Please enter domains separated by a single comma: " + reset).split(",")
+	domain = []
+	while domain == [] or domain == ['']:
+		domain = input(yellow + "Please enter domains separated by a single comma: " + reset).split(",")
+		if domain == ['']:
+			print(red + "You must input at least one domain to be searched!" + reset)
 
 	# Lists with which we will work during the script
 	emails = []
@@ -140,6 +148,37 @@ while True:
 				structure.append(username_input + "_" + birth_input)
 				structure.append(username_input + "." + birth_input[2:])
 				structure.append(username_input + "_" + birth_input[2:])
+
+		# Search Skype based on name and surname input to find hidden e-mail addresses
+		if skype_input == "y":
+			print("")
+			print("Searching Skype users...")
+			url = "https://www.skypli.com/search/" + name_input + "%20" + last_name_input
+			page = requests.get(url)
+			soup = BeautifulSoup(page.content, "html.parser")
+			results = soup.find(class_="search-results__title")
+			if results.text.strip() != "0 results for " + name_input + " " + last_name_input:
+				print(results.text.strip() + ". Autocompleting list of e-mail usernames...")
+				results = soup.find_all(class_="search-results__block-info-username")
+				for n in results:
+					test_text = n.text.strip()
+					if test_text.find(".cid.") == -1:
+						if test_text.find("live:") != -1:
+							if len(test_text) != 21:
+								structure.append(test_text[5:])
+
+								# find account using same e-mail username as someone else in skype (only look for underscore followed by last 1 or 2 chars being digits)
+								# then add them also to the pool (original string is also added before reduced in size)
+								if test_text[-1].isdigit() == True and test_text[-2] == "_":
+									structure.append(test_text[5:-2])
+								if test_text[-1].isdigit() == True and test_text[-2].isdigit() == True and test_text[-3] == "_":
+									structure.append(test_text[5:-3])
+						else:
+							structure.append(test_text)
+			else:
+				print("No results on Skype for this name!")
+
+
 
 		# Switch f!! with first letter of name, l!! with first letter of surname, first!! with first name and last!! with surname
 		found_first = False
@@ -251,34 +290,40 @@ while True:
 
 	endSearching = time.perf_counter()
 
-	# Ask user if he wants output in txt or csv format
-	print("")
-	outputs = "0"
-	while outputs != "1" and outputs != "2" and outputs != "3" and outputs != "4":
-		outputs = input(yellow + "Would you like any outputs?\n[1] No\n[2] .txt file\n[3] .csv file\n[4] Both\nYour choice: " + reset)
-		if outputs != "1" and outputs != "2" and outputs != "3" and outputs != "4":
-			print(red + "Please select 1,2,3 or 4!" + reset)
-
-	# Write results.txt file with all emails found in clear form
-	if outputs == "2" or outputs == "4":
+	if len(final_emails) != 0:
+		# Ask user if he wants output in txt or csv format
 		print("")
-		print("Creating txt file...")
-		f = open("results.txt", "w")
-		for finalEmail in final_emails_text:
-			f.write(finalEmail + "\n")
-		print(f.name + " created!")
-		f.close()  # close file after writing
+		outputs = "0"
+		while outputs != "1" and outputs != "2" and outputs != "3" and outputs != "4":
+			outputs = input(yellow + "Would you like any outputs?\n[1] No\n[2] .txt file\n[3] .csv file\n[4] Both\nYour choice: " + reset)
+			if outputs != "1" and outputs != "2" and outputs != "3" and outputs != "4":
+				print(red + "Please select 1,2,3 or 4!" + reset)
 
-	# Write resultscsv.csv file with all emails found in clear form
-	if outputs == "3" or outputs == "4":
-		print("")
-		print("Creating csv file...")
-		with open('resultscsv.csv', 'w', newline='') as resultscsv:
-			resultswriter = csv.writer(resultscsv, delimiter=',', quotechar='"', quoting=csv.QUOTE_MINIMAL)
+		# Write results.txt file with all emails found in clear form
+		if outputs == "2" or outputs == "4":
+			print("")
+			print("Creating txt file...")
+			f = open("results.txt", "w")
 			for finalEmail in final_emails_text:
-				resultswriter.writerow([finalEmail])
-		print("resultscsv.csv created!")
+				f.write(finalEmail + "\n")
+			print(f.name + " created!")
+			f.close()  # close file after writing
+
+		# Write resultscsv.csv file with all emails found in clear form
+		if outputs == "3" or outputs == "4":
+			print("")
+			print("Creating csv file...")
+			with open('resultscsv.csv', 'w', newline='') as resultscsv:
+				resultswriter = csv.writer(resultscsv, delimiter=',', quotechar='"', quoting=csv.QUOTE_MINIMAL)
+				for finalEmail in final_emails_text:
+					resultswriter.writerow([finalEmail])
+			print("resultscsv.csv created!")
+	else:
+		print(red + "No e-mails found! :(" + reset)
 
 	print("")
-	print(f"Your search lasted for {endSearching - startSearching:0.4f} seconds.\nEmails queried where {len(emails_for_verification)} in total.\nAverage verification time per e-mail address was {(endSearching - startSearching)/len(emails_for_verification):0.2f}.")
+	if len(emails_for_verification) != 0:
+		print(f"Your search lasted for {endSearching - startSearching:0.4f} seconds.\nEmails queried where {len(emails_for_verification)} in total.\nAverage verification time per e-mail address was {(endSearching - startSearching)/len(emails_for_verification):0.2f}.")
+	else:
+		print(f"Your search lasted for {endSearching - startSearching:0.4f} seconds.\nEmails queried where {len(emails_for_verification)} in total.")
 	print("")
