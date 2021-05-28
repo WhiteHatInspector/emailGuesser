@@ -121,7 +121,7 @@ Right now I am working on the following TODO list:
 - [ ] Remove preconfigured e-mail formats that are actually not often used by people in their e-mail addresses, to reduce execution time
 - [ ] Reduce execution time by any means necessary (Right now it has an average run time of 8-10 seconds/e-mail address searched)
 - [ ] Add new functions and a menu with different choices
-- [ ] Add exclusive check for e-mail addresses of protonmail
+- [X] Add exclusive check for e-mail addresses of protonmail
 
 ## Feedback and Questions
 For any feedback or questions please contact me on https://twitter.com/whinspector or theinspector32@protonmail.com
