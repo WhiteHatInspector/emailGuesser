@@ -60,7 +60,7 @@ while True:
 
 	# for every domain specified by user, make combinations and add them to the list
 	for dom in domain:
-		structure = ["f!!last!!", "f!!.last!!", "f!!_last!!", "last!!f!!", "last!!.f!!", "last!!_f!!", "l!!first!!", "l!!.first!!", "l!!_first!!", "first!!l!!", "first!!.l!!", "first!!_l!!", "last!!first!!", "last!!.first!!", "last!!_first!!", "first!!last!!", "first!!.last!!", "first!!_last!!", "first!!last!!1", "first!!last!!.1", "f!!last!!1", "f!!last!!.1", "first!!.last!!1", "first!!.last!!.1"]
+		structure = ["first!!", "f!!last!!", "f!!.last!!", "f!!_last!!", "last!!f!!", "last!!.f!!", "last!!_f!!", "l!!first!!", "l!!.first!!", "l!!_first!!", "first!!l!!", "first!!.l!!", "first!!_l!!", "last!!first!!", "last!!.first!!", "last!!_first!!", "first!!last!!", "first!!.last!!", "first!!_last!!", "first!!last!!1", "first!!last!!.1", "f!!last!!1", "f!!last!!.1", "first!!.last!!1", "first!!.last!!.1"]
 
 		# Add extra formats if specified by user
 		if extra_formats_input == "y":
@@ -157,26 +157,59 @@ while True:
 			page = requests.get(url)
 			soup = BeautifulSoup(page.content, "html.parser")
 			results = soup.find(class_="search-results__title")
-			if results.text.strip() != "0 results for " + name_input + " " + last_name_input:
-				print(results.text.strip() + ". Autocompleting list of e-mail usernames...")
-				results = soup.find_all(class_="search-results__block-info-username")
-				for n in results:
-					test_text = n.text.strip()
-					if test_text.find(".cid.") == -1:
-						if test_text.find("live:") != -1:
-							if len(test_text) != 21:
-								structure.append(test_text[5:])
+			if page.status_code != 500:
+				if results.text.strip() != "0 results for " + name_input + " " + last_name_input:
+					print(results.text.strip() + ". Autocompleting list of e-mail usernames...")
+					results = soup.find_all(class_="search-results__block-info-username")
+					for n in results:
+						test_text = n.text.strip()
+						if test_text.find(".cid.") == -1:
+							if test_text.find("live:") != -1:
+								if len(test_text) != 21:
+									structure.append(test_text[5:])
 
-								# find account using same e-mail username as someone else in skype (only look for underscore followed by last 1 or 2 chars being digits)
-								# then add them also to the pool (original string is also added before reduced in size)
-								if test_text[-1].isdigit() == True and test_text[-2] == "_":
-									structure.append(test_text[5:-2])
-								if test_text[-1].isdigit() == True and test_text[-2].isdigit() == True and test_text[-3] == "_":
-									structure.append(test_text[5:-3])
-						else:
-							structure.append(test_text)
+									# find account using same e-mail username as someone else in skype (only look for underscore followed by last 1 or 2 chars being digits)
+									# then add them also to the pool (original string is also added before reduced in size)
+									if test_text[-1].isdigit() == True and test_text[-2] == "_":
+										structure.append(test_text[5:-2])
+									if test_text[-1].isdigit() == True and test_text[-2].isdigit() == True and test_text[-3] == "_":
+										structure.append(test_text[5:-3])
+							else:
+								structure.append(test_text)
+				else:
+					print("No results on Skype for this name!")
 			else:
-				print("No results on Skype for this name!")
+				# If skypli.com is down (error 500), use tools.epieos.com/skype.php
+
+				url = "https://tools.epieos.com/skype.php"
+				my_data = {"data": name_input + " " + last_name_input}
+				page = requests.post(url, data=my_data)
+				soup = BeautifulSoup(page.content, "html.parser")
+				results = soup.find_all(class_="col-md-4 offset-md-4 mt-5 pt-3 border")
+				check_results = soup.find(class_="col-md-4 offset-md-4 mt-5 pt-3 border")
+
+				if len(results) >= 1 and "No skype account" not in check_results.text.strip():
+					print("Found " + str(len(results)) + " Skype users with that name. Autocompleting list of e-mail usernames...")
+					for n in results:
+						test_text = n.text.strip()
+						if test_text.find(".cid.") == -1:
+							if test_text.find("live:") != -1:
+								test_text = test_text[test_text.find("live:"):]
+								if len(test_text) != 21:
+									structure.append(test_text[5:])
+
+									# find account using same e-mail username as someone else in skype (only look for underscore followed by last 1 or 2 chars being digits)
+									# then add them also to the pool (original string is also added before reduced in size)
+									if test_text[-1].isdigit() == True and test_text[-2] == "_":
+										structure.append(test_text[5:-2])
+									if test_text[-1].isdigit() == True and test_text[-2].isdigit() == True and \
+											test_text[-3] == "_":
+										structure.append(test_text[5:-3])
+							else:
+								test_text = test_text[test_text.find("Id : ")+5:]
+								structure.append(test_text)
+				else:
+					print("No results on Skype for this name!")
 
 
 
@@ -237,48 +270,106 @@ while True:
 			# Else if found registered to multiple users, show link to the tool user to decide if he wants to see more info
 			# Else if found on breached database, return that the e-mail address is found to be Pwned
 			# Else, return that the e-mail was not found to be pwned (does not exist)
-			for n in results:
-				if n.text.strip() == "1 results for " + mailcheck:
-					final_emails_text.insert(0, mailcheck)
-					print(blue + mailcheck + reset + " was found in Skype")
-					result = soup.find(class_="search-results__block-info-username")
-					url_new = "https://www.skypli.com/profile/" + result.text.strip()
-					page_new = requests.get(url_new)
-					soup_new = BeautifulSoup(page_new.content, "html.parser")
-					mailcheck = blue + mailcheck + reset
-					result_new = soup_new.find_all(class_="profile-box__table-value")
-					for r in result_new:
-						mailcheck = mailcheck + "\n" + r.text.strip()
-					final_emails.insert(0, mailcheck + "\nMore info: " + url_new + "\n") # Add it to the top of the list in order to be shown first as Skype account
-				elif n.text.strip() != "0 results for " + mailcheck:
-					final_emails_text.insert(0, mailcheck)
-					print(blue + mailcheck + reset + " was found in multiple Skype accounts")
-					final_emails.insert(0, blue + mailcheck + reset + " Multiple skype accounts found: " + url + "\n") # Add it to the top of the list in order to be shown first as Skype account
-				else:
-					# Count time elapsed since last haveIbeenPwned iteration/check
-					requestPwnedEndTimer = time.perf_counter()
-					requestPwnedTimePassed = requestPwnedEndTimer - requestPwnedStartTimer
+			if page.status_code != 500:
+				for n in results:
+					if n.text.strip() == "1 results for " + mailcheck:
+						final_emails_text.insert(0, mailcheck)
+						print(blue + mailcheck + reset + " was found in Skype")
+						result = soup.find(class_="search-results__block-info-username")
+						url_new = "https://www.skypli.com/profile/" + result.text.strip()
+						page_new = requests.get(url_new)
+						soup_new = BeautifulSoup(page_new.content, "html.parser")
+						mailcheck = blue + mailcheck + reset
+						result_new = soup_new.find_all(class_="profile-box__table-value")
+						for r in result_new:
+							mailcheck = mailcheck + "\n" + r.text.strip()
+						final_emails.insert(0, mailcheck + "\nMore info: " + url_new + "\n") # Add it to the top of the list in order to be shown first as Skype account
+					elif n.text.strip() != "0 results for " + mailcheck:
+						final_emails_text.insert(0, mailcheck)
+						print(blue + mailcheck + reset + " was found in multiple Skype accounts")
+						final_emails.insert(0, blue + mailcheck + reset + " Multiple skype accounts found: " + url + "\n") # Add it to the top of the list in order to be shown first as Skype account
+					else:
+						# Count time elapsed since last haveIbeenPwned iteration/check
+						requestPwnedEndTimer = time.perf_counter()
+						requestPwnedTimePassed = requestPwnedEndTimer - requestPwnedStartTimer
 
-					# Add a random delay between 7 and 11 seconds to not let your IP get banned
-					randomTimePassed = random.randint(7, 11)
-					if requestPwnedTimePassed < randomTimePassed:
-						time.sleep(randomTimePassed - requestPwnedTimePassed)
+						# Add a random delay between 7 and 11 seconds to not let your IP get banned
+						randomTimePassed = random.randint(7, 11)
+						if requestPwnedTimePassed < randomTimePassed:
+							time.sleep(randomTimePassed - requestPwnedTimePassed)
 
-					url = "https://haveibeenpwned.com/account/" + mailcheck
-					page = requests.get(url)
-					soup = BeautifulSoup(page.content, 'html.parser')
-					results = soup.find_all(id="pwnCount")  # class_='pwnTitle'
-					# print(results)
-					for n in results:
-						if n.text.strip() == "Not pwned in any data breaches and found no pastes (subscribe to search sensitive breaches)":
-							print(green + mailcheck + reset + " not found in breached database.")
-						else:
-							print(red + mailcheck + reset + " was found to be " + red + "Pwned!" + reset)
-							final_emails_text.append(mailcheck)
-							final_emails.append(red + mailcheck + reset + "\n") # Add it to the bottom of the list as breached with no additional details
+						url = "https://haveibeenpwned.com/account/" + mailcheck
+						page = requests.get(url)
+						soup = BeautifulSoup(page.content, 'html.parser')
+						results = soup.find_all(id="pwnCount")  # class_='pwnTitle'
+						# print(results)
+						for n in results:
+							if n.text.strip() == "Not pwned in any data breaches and found no pastes (subscribe to search sensitive breaches)":
+								print(green + mailcheck + reset + " not found in breached database.")
+							else:
+								print(red + mailcheck + reset + " was found to be " + red + "Pwned!" + reset)
+								final_emails_text.append(mailcheck)
+								final_emails.append(red + mailcheck + reset + "\n") # Add it to the bottom of the list as breached with no additional details
 
-					# Restart timer
-					requestPwnedStartTimer = time.perf_counter()
+						# Restart timer
+						requestPwnedStartTimer = time.perf_counter()
+			else:
+				# If skypli.com is down (error 500), use tools.epieos.com/skype.php
+
+				url = "https://tools.epieos.com/skype.php"
+				my_data = {"data": mailcheck}
+				page = requests.post(url, data=my_data)
+				soup = BeautifulSoup(page.content, "html.parser")
+				results = soup.find_all(class_="col-md-4 offset-md-4 mt-5 pt-3 border")
+				avatars = soup.find_all(src=re.compile("avatar.skype.com"))
+
+				for n in results:
+
+					if len(results) == 1 and "No skype account" not in n.text.strip():
+						final_emails_text.insert(0, mailcheck)
+						print(blue + mailcheck + reset + " was found in Skype")
+						find_name = n.text.strip().find("Name : ")
+						find_skype_id = n.text.strip().find("Skype Id : ")
+						end_text = n.text.strip().rfind("</p>")
+						avatar = soup.find(src=re.compile("avatar.skype.com"))
+						mailcheck = blue + mailcheck + reset + "\n" + n.text.strip()[find_name:find_skype_id] + "\n" + n.text.strip()[find_skype_id:end_text] + "\nAvatar : " + blue + str(avatar["src"]) + reset
+						final_emails.insert(0, mailcheck + "\n") # Add it to the top of the list in order to be shown first as Skype account
+					elif len(results) > 1:
+						final_emails_text.insert(0, mailcheck)
+						print(blue + mailcheck + reset + " was found in multiple Skype accounts")
+						mailcheck = blue + mailcheck + reset + " --> Multiple skype accounts found: \n"
+						for n in results:
+							find_name = n.text.strip().find("Name : ")
+							find_skype_id = n.text.strip().find("Skype Id : ")
+							end_text = n.text.strip().rfind("</p>")
+							mailcheck += n.text.strip()[find_name:find_skype_id] + "\n" + n.text.strip()[find_skype_id:end_text] + "\n\n"
+						final_emails.insert(0, mailcheck + "\n")  # Add it to the top of the list in order to be shown first as Skype account
+						break
+					else:
+						# Count time elapsed since last haveIbeenPwned iteration/check
+						requestPwnedEndTimer = time.perf_counter()
+						requestPwnedTimePassed = requestPwnedEndTimer - requestPwnedStartTimer
+
+						# Add a random delay between 7 and 11 seconds to not let your IP get banned
+						randomTimePassed = random.randint(7, 11)
+						if requestPwnedTimePassed < randomTimePassed:
+							time.sleep(randomTimePassed - requestPwnedTimePassed)
+
+						url = "https://haveibeenpwned.com/account/" + mailcheck
+						page = requests.get(url)
+						soup = BeautifulSoup(page.content, 'html.parser')
+						results = soup.find_all(id="pwnCount")  # class_='pwnTitle'
+						# print(results)
+						for n in results:
+							if n.text.strip() == "Not pwned in any data breaches and found no pastes (subscribe to search sensitive breaches)":
+								print(green + mailcheck + reset + " not found in breached database.")
+							else:
+								print(red + mailcheck + reset + " was found to be " + red + "Pwned!" + reset)
+								final_emails_text.append(mailcheck)
+								final_emails.append(red + mailcheck + reset + "\n") # Add it to the bottom of the list as breached with no additional details
+
+						# Restart timer
+						requestPwnedStartTimer = time.perf_counter()
 
 	# Show user all e-mails that were found on skype or pwned
 	print("")

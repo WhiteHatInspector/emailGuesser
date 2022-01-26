@@ -61,7 +61,7 @@ Add domains: Input all domains that you wish to conduct a search to, separated b
 ATTENTION! This is probably the most important input. If you omit a domain that your target uses for one of his e-mail addresses, you will not find it because the script will not search for it.
 ```
 The script will check the structure of the e-mail addresses that were automatically created and will query the valid ones to:
-1. Skype (using the skypli.com site)
+1. Skype (using the skypli.com or tools.epieos.com/skype.php site)
 2. Breached databases (using the haveibeenpwned.com site)
 
 The script may ask you at some point if you want to automatically add Skype usernames using the full name of your target. The reason this is done and why this is important, can be found in my blog post [here](https://whitehatinspector.blogspot.com/2021/03/skype-hidden-osint-goldmine.html)
@@ -121,7 +121,8 @@ Right now I am working on the following TODO list:
 - [ ] Remove preconfigured e-mail formats that are actually not often used by people in their e-mail addresses, to reduce execution time
 - [ ] Reduce execution time by any means necessary (Right now it has an average run time of 8-10 seconds/e-mail address searched)
 - [ ] Add new functions and a menu with different choices
-- [X] Add exclusive check for e-mail addresses of protonmail
+- [ ] Add exclusive check for e-mail addresses of protonmail
+- [X] Fix skypli.com 500 status error adding epieos tools as alternative skype search tool
 
 ## Feedback and Questions
 For any feedback or questions please contact me on https://twitter.com/whinspector or theinspector32@protonmail.com
